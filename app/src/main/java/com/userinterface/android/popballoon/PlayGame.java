@@ -1,5 +1,6 @@
 package com.userinterface.android.popballoon;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -78,7 +79,9 @@ public class PlayGame extends AppCompatActivity {
 
     }
     public void start(){
-        Rectangle.placeRectangle(400,200,GlobalElements.TINT_COLORS[0],contentView,this);
+        Rectangle rectangle = new Rectangle(this , GlobalElements.TINT_COLORS[0],200,100);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(100, 200);
+        contentView.addView(rectangle);
     }
 
 }

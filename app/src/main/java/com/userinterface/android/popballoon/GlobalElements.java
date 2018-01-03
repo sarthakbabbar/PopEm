@@ -10,8 +10,8 @@ public class GlobalElements {
 
     public static final String APP_NAME = "Pop'Em";
 
-    public static final int[] TINT_COLORS = new int[5];
+    public static int[] TINT_COLORS = new int[5];
 
-    public static final int LEVEL_NUMBER= 0;
+    public static int LEVEL_NUMBER= 0;
 
 }
