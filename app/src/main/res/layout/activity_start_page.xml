@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.userinterface.android.popballoon.StartPage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
+        <TextView
+            android:id="@+id/appNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AppName"
+            android:textSize="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            />
+
+        <ImageButton
+            android:id="@+id/imageBtnPlay"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="180dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="50dp"
+            android:background="@null"
+            android:onClick="onPlay"
+            app:srcCompat="@drawable/btn_play" />
+
+        <ImageButton
+            android:id="@+id/imageBtnReset"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="180dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:background="@null"
+            android:onClick="onReset"
+            app:srcCompat="@drawable/btn_reset" />
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adViewBanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        </com.google.android.gms.ads.AdView>
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
