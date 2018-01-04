@@ -11,15 +11,10 @@ import android.widget.ImageView;
 public class Rectangle extends android.support.v7.widget.AppCompatImageView {
     public Rectangle(Context context, int color, int screenHeight, int screenWidth) {
         super(context);
-        //this.setImageResource(R.drawable.rectangle);
-        //this.setColorFilter(color);
-        //ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(screenWidth, screenHeight);
-        //this.setX(screenWidth);
-        //this.setY(screenHeight);
-        this.setX(600);
-        this.setY(1400);
+        this.setX(screenWidth);
+        this.setY(screenHeight);
         this.setImageResource(R.drawable.rectangle);
-        this.setColorFilter(GlobalElements.TINT_COLORS[0]);
+        this.setColorFilter(color);
 
     }
    // public void placeRectangle(int height, int width,int color, ViewGroup contentView, Context context){

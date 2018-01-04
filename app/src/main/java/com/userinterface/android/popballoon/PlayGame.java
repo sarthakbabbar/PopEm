@@ -50,7 +50,8 @@ public class PlayGame extends AppCompatActivity {
                     try {
                         screenWidth = contentView.getWidth();
                         screenHeight = contentView.getHeight();
-                        start();
+
+                        startGame();
                     }
                     catch (Exception e){
                         Log.e("",e.getMessage());
@@ -78,10 +79,20 @@ public class PlayGame extends AppCompatActivity {
         }
 
     }
-    public void start(){
-        Rectangle rectangle = new Rectangle(this , GlobalElements.TINT_COLORS[0],200,100);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(100, 200);
-        contentView.addView(rectangle);
+    public void startGame() {
+
+        //populating the rectangles
+        Rectangle[] rectangle = new Rectangle[5];
+        int yOfRectangles = (int)(0.85 * contentView.getHeight());
+        int[] xofRectangle = new int[5];
+        for (int i = 0; i < 5; i++) {
+            xofRectangle[i] = (int) (((2*i+1)*0.1*contentView.getWidth()) - 80); // This number 80 needs to be changes to a logical number
+            rectangle[i] = new Rectangle(this, GlobalElements.TINT_COLORS[i], yOfRectangles, xofRectangle[i]);
+            contentView.addView(rectangle[i]);
+
+
+
+        }
     }
 
 }
