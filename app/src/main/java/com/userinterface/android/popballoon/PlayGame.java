@@ -129,23 +129,17 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
                 throw new AssertionError(
                         "Expected 1 param for current level");
             }
-            //game logic
-            int level = GlobalElements.levelNumber;
-            int maxDelay = Math.max(GlobalElements.MIN_DELAY,
-                    (GlobalElements.MAX_DELAY - ((level - 1) * 500)));
-            int minDelay = maxDelay / 2;
 
             int balloonsLaunched = 0;
             while (balloonsLaunched < GlobalElements.MAX_BALLOONS) {
 
 //              Get a random horizontal position for the next balloon
-                Random random = new Random(new Date().getTime());
-                int xPosition = random.nextInt(screenWidth - 200);
+                int xPosition = (int) (Math.random()*(0.8*screenWidth)); // 0.8 is to avoid the balloon getting cut on the right side.
                 publishProgress(xPosition);
-                //balloonsLaunched++;
+                balloonsLaunched++;
 
 //              Wait a random number of milliseconds before looping
-                int delay = random.nextInt(minDelay) + minDelay;
+                int delay = LevelLogic.getBalloonDelay();
                 try {
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {
@@ -175,7 +169,6 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         int randColor = (int) (Math.random()*5);
 
         Balloon balloon = new Balloon(this, tintColors[randColor], 150);
-
 
 //      Set balloon vertical position and dimensions, add to container
         balloon.setX(x);

@@ -39,4 +39,21 @@ public class LevelLogic {
      return assRectColor;
     }
 
+    public static int getMinDelay()
+    {
+        return GlobalElements.MIN_DELAY;
+    }
+
+
+    public static int getMaxDelay()
+    {
+        return GlobalElements.MAX_DELAY;
+    }
+
+    public static int getBalloonDelay()
+    {
+        int balloonDelay = Math.max(GlobalElements.MIN_DELAY, (GlobalElements.MAX_DELAY - ((GlobalElements.levelNumber - 1) * 500)));
+        //int balloonDelay = (int) ((Math.random()*(GlobalElements.MAX_DELAY - GlobalElements.MAX_DELAY)) + GlobalElements.MIN_DELAY);
+        return balloonDelay;
+    }
 }

@@ -41,9 +41,6 @@ public class Balloon extends android.support.v7.widget.AppCompatImageView implem
         balloonAnimator.addListener(this);
         balloonAnimator.addUpdateListener(this);
         balloonAnimator.start();
-
-
-
     }
 
     @Override
