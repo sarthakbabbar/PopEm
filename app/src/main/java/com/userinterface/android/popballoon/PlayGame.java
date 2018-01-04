@@ -1,7 +1,6 @@
 package com.userinterface.android.popballoon;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,22 +16,15 @@ import java.util.Random;
 
 public class PlayGame extends AppCompatActivity implements Balloon.BalloonListener {
 
-    public static ViewGroup contentView;
+    public ViewGroup contentView;
     private AdView adPlayGame;
-    public static int screenWidth, screenHeight;
+    public int screenWidth, screenHeight;
     private boolean endgame;
+    private int[] tintColors = new int[]{GlobalElements.RED,GlobalElements.GREEN,GlobalElements.BLUE,GlobalElements.BROWN,GlobalElements.OLIVE};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
-
-        GlobalElements.TINT_COLORS[0] = Color.argb(120,255,0,0);
-        GlobalElements.TINT_COLORS[1] = Color.argb(180,0,255,0);
-        GlobalElements.TINT_COLORS[2] = Color.argb(190,0,0,255);
-        GlobalElements.TINT_COLORS[3] = Color.argb(210,130,125,0);
-        GlobalElements.TINT_COLORS[4] = Color.argb(200,0,125,130);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
@@ -43,8 +35,6 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
         Intent intent = getIntent();
         String message = intent.getStringExtra("EXTRA_MESSAGE");
-        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-        toast.show();
 
         //adding banner ad to the activity
         try {
@@ -71,7 +61,6 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
                     try {
                         screenWidth = contentView.getWidth();
                         screenHeight = contentView.getHeight();
-
                         startGame();
                     }
                     catch (Exception e){
@@ -114,42 +103,20 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     }
     public void startGame() {
         GlobalElements.levelNumber++;
-
-
+        placeRectangle();
         BalloonLauncher launcher = new BalloonLauncher();
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         launcher.execute(GlobalElements.levelNumber);
-        placeRectangle();
+
 
     }
-    public void launchBalloon(int x) {
-        //adding colors to the balloon
-        //Random r = new Random();
-        int randColor = (int) (Math.random()*5);
 
-        Balloon balloon = new Balloon(this, GlobalElements.TINT_COLORS[randColor], 150);
 
-        /*if (NextColor + 1 == GlobalElements.TINT_COLORS.length) {
-            NextColor = 0;
-        } else {
-            NextColor++;
-        }*/
-
-//      Set balloon vertical position and dimensions, add to container
-        balloon.setX(x);
-        balloon.setY(PlayGame.screenHeight + balloon.getHeight());
-        contentView.addView(balloon);
-
-//     Balloon animation begins
-
-        int duration = Math.max(GlobalElements.MIN_DURATION, GlobalElements.MAX_DURATION - (GlobalElements.levelNumber * 1000));
-        balloon.releaseBalloon(PlayGame.screenHeight, duration);
-
-    }
 
     public class BalloonLauncher extends AsyncTask<Integer, Integer, Void> {
 
@@ -163,7 +130,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
                         "Expected 1 param for current level");
             }
             //game logic
-            int level = params[0];
+            int level = GlobalElements.levelNumber;
             int maxDelay = Math.max(GlobalElements.MIN_DELAY,
                     (GlobalElements.MAX_DELAY - ((level - 1) * 500)));
             int minDelay = maxDelay / 2;
@@ -191,8 +158,6 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         }
 
 
-
-
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
@@ -203,9 +168,29 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
 
     }
+
+    public void launchBalloon(int x) {
+        //adding colors to the balloon
+        //Random r = new Random();
+        int randColor = (int) (Math.random()*5);
+
+        Balloon balloon = new Balloon(this, tintColors[randColor], 150);
+
+
+//      Set balloon vertical position and dimensions, add to container
+        balloon.setX(x);
+        balloon.setY(screenHeight + balloon.getHeight());
+        contentView.addView(balloon);
+
+//     Balloon animation begins
+        int duration = Math.max(GlobalElements.MIN_DURATION, GlobalElements.MAX_DURATION - (GlobalElements.levelNumber * 1000));
+        balloon.releaseBalloon(screenHeight, duration);
+
+    }
+
     @Override
     public void popBalloon(Balloon balloon, boolean userTouch, int currentColor) {
-        PlayGame.contentView.removeView(balloon);
+        contentView.removeView(balloon);
 
 
     }
@@ -214,12 +199,11 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         Rectangle[] rectangle = new Rectangle[5];
         int yOfRectangles = (int)(0.85 * contentView.getHeight());
         int[] xofRectangle = new int[5];
+        int[] rectColor = LevelLogic.getRectangleColor();
         for (int i = 0; i < 5; i++) {
             xofRectangle[i] = (int) (((2*i+1)*0.1*contentView.getWidth()) - 80); // This number 80 needs to be changes to a logical number
-            rectangle[i] = new Rectangle(this, GlobalElements.TINT_COLORS[i], yOfRectangles, xofRectangle[i]);
+            rectangle[i] = new Rectangle(this, rectColor[i], yOfRectangles, xofRectangle[i]);
             contentView.addView(rectangle[i]);
-
-
 
         }
     }
