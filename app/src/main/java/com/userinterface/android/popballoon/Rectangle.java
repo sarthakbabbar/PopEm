@@ -17,11 +17,5 @@ public class Rectangle extends android.support.v7.widget.AppCompatImageView {
         this.setColorFilter(color);
 
     }
-   // public void placeRectangle(int height, int width,int color, ViewGroup contentView, Context context){
-      public void placeRectangle (ViewGroup contentView){
-        //Rectangle rectangle = new Rectangle(context, GlobalElements.TINT_COLORS[color],400,200);
-        //rectangle.setX(width);
-        //rectangle.setY(height);
-        //contentView.addView(this);
-    }
+
 }

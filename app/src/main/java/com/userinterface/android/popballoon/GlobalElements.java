@@ -12,6 +12,18 @@ public class GlobalElements {
 
     public static int[] TINT_COLORS = new int[5];
 
-    public static int LEVEL_NUMBER= 0;
+    public static int levelNumber= 0;
+
+    public static final int MIN_DELAY = 500;
+
+    public static final int MAX_DELAY = 1500;
+
+    public static final int MIN_DURATION = 1000;
+
+    public static final int MAX_DURATION = 8000;
+
+    public static final int MAX_BALLOONS = 5;
+
+
 
 }
