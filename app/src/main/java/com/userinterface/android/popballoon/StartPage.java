@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -42,6 +43,10 @@ public class StartPage extends AppCompatActivity {
             Log.d("onCreate", "could not create the page");
             Log.e("",e.getMessage());
         }
+        Intent intent = getIntent();
+        String message = intent.getStringExtra("EXTRA_MESSAGE");
+        Toast toast = Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT);
+        toast.show();
 
         Log.d("On Create","the page is loaded ");
 

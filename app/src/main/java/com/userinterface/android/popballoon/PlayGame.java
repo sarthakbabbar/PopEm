@@ -1,10 +1,17 @@
 package com.userinterface.android.popballoon;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
@@ -12,6 +19,8 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+
+import org.w3c.dom.Text;
 
 
 public class PlayGame extends AppCompatActivity implements Balloon.BalloonListener {
@@ -23,6 +32,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     private int[] tintColors = new int[]{GlobalElements.RED,GlobalElements.GREEN,GlobalElements.BLUE,GlobalElements.BROWN,GlobalElements.OLIVE};
     private int balloonsPoppedThisLevel;
     TextView levelDisplay;
+    BalloonLauncher launcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,10 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
         Intent intent = getIntent();
         String message = intent.getStringExtra("EXTRA_MESSAGE");
+        Toast toast = Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT);
+        toast.show();
+
+
 
         //adding banner ad to the activity
         try {
@@ -64,6 +78,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
                         screenWidth = contentView.getWidth();
                         screenHeight = contentView.getHeight();
                         startGame();
+
                     }
                     catch (Exception e){
                         Log.e("",e.getMessage());
@@ -72,16 +87,14 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
                 }
             });
         }
-
-
-
-
     }
+
 
     public void endGame()
     {
-        endgame = true;
 
+        endgame = true;
+        launcher.cancel(true);
         Intent intent = new Intent(this, StartPage.class);
         intent.putExtra("EXTRA_MESSAGE", "The game has ended");
         startActivity(intent);
@@ -115,10 +128,10 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         String gameLevel = settings.getString("gameLevel", "");
         GlobalElements.levelNumber = Integer.parseInt(gameLevel);
         levelDisplay.setText("Level " + gameLevel);
-
+        launcher = new BalloonLauncher();
         balloonsPoppedThisLevel = 0;
         placeRectangle();
-        BalloonLauncher launcher = new BalloonLauncher();
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -197,7 +210,6 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
     @Override
     public void popBalloon(Balloon balloon, boolean userTouch, int currentColor) {
-        boolean temp = LevelLogic.checkPopColor(currentColor);
         if ((userTouch && !LevelLogic.checkPopColor(currentColor) || (!userTouch && LevelLogic.checkPopColor(currentColor)))){
             endGame();
         }
