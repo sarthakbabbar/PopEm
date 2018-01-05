@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -21,6 +22,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     private boolean endgame;
     private int[] tintColors = new int[]{GlobalElements.RED,GlobalElements.GREEN,GlobalElements.BLUE,GlobalElements.BROWN,GlobalElements.OLIVE};
     private int balloonsPoppedThisLevel;
+    TextView levelDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         
         //variable contentView has the same dimension as the activity play game
         contentView = findViewById(R.id.activity_play_game);
+        levelDisplay = findViewById(R.id.textLevelNumber);
 
         Intent intent = getIntent();
         String message = intent.getStringExtra("EXTRA_MESSAGE");
@@ -100,13 +103,8 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("gameLevel", levelString);
         editor.commit();
-        Toast toast = Toast.makeText(getApplicationContext(), levelString, Toast.LENGTH_LONG);
-        toast.show();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        //starting Game here
         startGame();
 
     }
@@ -116,6 +114,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
         String gameLevel = settings.getString("gameLevel", "");
         GlobalElements.levelNumber = Integer.parseInt(gameLevel);
+        levelDisplay.setText("Level " + gameLevel);
 
         balloonsPoppedThisLevel = 0;
         placeRectangle();
