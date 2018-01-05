@@ -1,5 +1,9 @@
 package com.userinterface.android.popballoon;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
 /**
  * Created by sarthakbabbar on 04/01/18.
  */
@@ -37,6 +41,21 @@ public class LevelLogic {
 
         }
      return assRectColor;
+    }
+
+    public static boolean checkPopColor(int balloonColor){
+
+        boolean poppedBalloonColor = false;
+        int[] colorCheck = getRectangleColor();
+        for (int i: colorCheck)
+        {
+            if (i== balloonColor) {
+                poppedBalloonColor = true;
+            }
+        }
+
+        return poppedBalloonColor;
+
     }
 
     public static int getMinDelay()

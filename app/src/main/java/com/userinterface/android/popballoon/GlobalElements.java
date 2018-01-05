@@ -18,7 +18,7 @@ public class GlobalElements {
     public static final int OLIVE = Color.argb(200,0,125,130);
 
 
-    public static int levelNumber= 15;
+    public static int levelNumber= 1;
 
     public static final int MIN_DELAY = 500;
 

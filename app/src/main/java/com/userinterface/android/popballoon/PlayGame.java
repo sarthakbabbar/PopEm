@@ -76,12 +76,13 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
     }
 
-    public void onGameEnd()
+    public void endGame()
     {
+        endgame = true;
         Intent intent = new Intent(this, StartPage.class);
         intent.putExtra("EXTRA_MESSAGE", "The game has ended");
         startActivity(intent);
-        endgame = true;
+
     }
 
     public void nextLevel(){
@@ -183,8 +184,11 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
     @Override
     public void popBalloon(Balloon balloon, boolean userTouch, int currentColor) {
+        boolean temp = LevelLogic.checkPopColor(currentColor);
+        if ((userTouch && !LevelLogic.checkPopColor(currentColor) || (!userTouch && LevelLogic.checkPopColor(currentColor)))){
+            endGame();
+        }
         contentView.removeView(balloon);
-
 
     }
     public void placeRectangle(){
