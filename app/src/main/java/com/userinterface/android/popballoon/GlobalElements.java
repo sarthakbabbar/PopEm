@@ -28,7 +28,7 @@ public class GlobalElements {
 
     public static final int MAX_DURATION = 8000;
 
-    public static final int MAX_BALLOONS = 5;
+    public static final int MAX_BALLOONS = 10;
 
 
 

@@ -11,8 +11,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import java.util.Date;
-import java.util.Random;
+
 
 public class PlayGame extends AppCompatActivity implements Balloon.BalloonListener {
 
@@ -21,7 +20,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     public int screenWidth, screenHeight;
     private boolean endgame;
     private int[] tintColors = new int[]{GlobalElements.RED,GlobalElements.GREEN,GlobalElements.BLUE,GlobalElements.BROWN,GlobalElements.OLIVE};
-
+    private int balloonsPoppedThisLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,35 +78,50 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     public void endGame()
     {
         endgame = true;
+
         Intent intent = new Intent(this, StartPage.class);
         intent.putExtra("EXTRA_MESSAGE", "The game has ended");
         startActivity(intent);
+        finish();
 
     }
 
     public void nextLevel(){
+        endgame = false;
         //Reading level data
         SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
         String gameLevel = settings.getString("gameLevel", "");
-
         GlobalElements.levelNumber = Integer.parseInt(gameLevel);
-        GlobalElements.levelNumber++;
-        String levelString = Integer.toString(GlobalElements.levelNumber);
 
+        GlobalElements.levelNumber++;
+
+        String levelString = Integer.toString(GlobalElements.levelNumber);
         // Writing data to SharedPreferences
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("gameLevel", levelString);
         editor.commit();
-
+        Toast toast = Toast.makeText(getApplicationContext(), levelString, Toast.LENGTH_LONG);
+        toast.show();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         startGame();
 
     }
     public void startGame() {
-        GlobalElements.levelNumber++;
+        endgame = false;
+        //GlobalElements.levelNumber++;
+        SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
+        String gameLevel = settings.getString("gameLevel", "");
+        GlobalElements.levelNumber = Integer.parseInt(gameLevel);
+
+        balloonsPoppedThisLevel = 0;
         placeRectangle();
         BalloonLauncher launcher = new BalloonLauncher();
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -189,6 +203,11 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
             endGame();
         }
         contentView.removeView(balloon);
+        balloonsPoppedThisLevel++;
+        if (balloonsPoppedThisLevel == GlobalElements.MAX_BALLOONS && endgame!= true)
+        {
+            nextLevel();
+        }
 
     }
     public void placeRectangle(){

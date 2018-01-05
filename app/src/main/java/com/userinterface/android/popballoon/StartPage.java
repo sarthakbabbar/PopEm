@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -65,7 +63,7 @@ public class StartPage extends AppCompatActivity {
         // Here the level resets and starts from 0
         SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("gameLevel", "0");
+        editor.putString("gameLevel", "1");
         try {
             //trying to commit the change
             editor.commit();
