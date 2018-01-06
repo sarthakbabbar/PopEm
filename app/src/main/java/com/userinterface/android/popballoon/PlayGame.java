@@ -103,11 +103,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
        while (launcher.getStatus().toString() == "RUNNING") {
             launcher.cancel(true);
-           try {
-               Thread.sleep(500);
-           } catch (InterruptedException e) {
-               e.printStackTrace();
-           }
+
 
        }
 
@@ -154,11 +150,11 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         balloonsPoppedThisLevel = 0;
         placeRectangle();
 
-        try {
-            Thread.sleep(2000);
+        /*try {
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
         launcher.execute(GlobalElements.levelNumber);
 
