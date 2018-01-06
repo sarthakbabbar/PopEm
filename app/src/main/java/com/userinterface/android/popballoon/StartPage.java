@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -43,10 +45,22 @@ public class StartPage extends AppCompatActivity {
             Log.d("onCreate", "could not create the page");
             Log.e("",e.getMessage());
         }
-        Intent intent = getIntent();
-        String message = intent.getStringExtra("EXTRA_MESSAGE");
-        Toast toast = Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT);
-        toast.show();
+
+    /*    LayoutInflater inflater = getLayoutInflater();
+        // Inflate the Layout
+        View layout = inflater.inflate(R.layout.custom_layout,
+                (ViewGroup) findViewById(R.id.custom_toast_layout));
+
+        TextView text =  layout.findViewById(R.id.textToShow);
+        // Set the Text to show in TextView
+        if (GlobalElements.boolEndGame == true) {
+            text.setText("Game Over");
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+        } */
 
         Log.d("On Create","the page is loaded ");
 
@@ -93,6 +107,19 @@ public class StartPage extends AppCompatActivity {
             adStartPage.resume();
         }
         Log.d("onResume","The app was resumed");
+        if (GlobalElements.boolEndGame == true) {
+            LayoutInflater inflater = getLayoutInflater();
+            // Inflate the Layout
+            View layout = inflater.inflate(R.layout.custom_layout,
+                    (ViewGroup) findViewById(R.id.custom_toast_layout));
 
+            TextView text =  layout.findViewById(R.id.textToShow);
+            text.setText("Game Over");
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+        }
     }
 }

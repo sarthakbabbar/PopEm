@@ -1,16 +1,12 @@
 package com.userinterface.android.popballoon;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -20,15 +16,12 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-import org.w3c.dom.Text;
-
 
 public class PlayGame extends AppCompatActivity implements Balloon.BalloonListener {
 
     public ViewGroup contentView;
     private AdView adPlayGame;
     public int screenWidth, screenHeight;
-    private boolean endgame;
     private int[] tintColors = new int[]{GlobalElements.RED,GlobalElements.GREEN,GlobalElements.BLUE,GlobalElements.BROWN,GlobalElements.OLIVE};
     private int balloonsPoppedThisLevel;
     TextView levelDisplay;
@@ -47,10 +40,20 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
         Intent intent = getIntent();
         String message = intent.getStringExtra("EXTRA_MESSAGE");
-        Toast toast = Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT);
+        LayoutInflater inflater = getLayoutInflater();
+        // Inflate the Layout
+        View layout = inflater.inflate(R.layout.custom_layout,
+                (ViewGroup) findViewById(R.id.custom_toast_layout));
+
+        TextView text =  layout.findViewById(R.id.textToShow);
+        // Set the Text to show in TextView
+        text.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
         toast.show();
-
-
 
         //adding banner ad to the activity
         try {
@@ -93,17 +96,36 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     public void endGame()
     {
 
-        endgame = true;
-        launcher.cancel(true);
-        Intent intent = new Intent(this, StartPage.class);
-        intent.putExtra("EXTRA_MESSAGE", "The game has ended");
-        startActivity(intent);
-        finish();
+        GlobalElements.boolEndGame = true;
+       while(!launcher.isCancelled()) {
+            launcher.cancel(true);
+        }
+
+       while (launcher.getStatus().toString() == "RUNNING") {
+            launcher.cancel(true);
+           try {
+               Thread.sleep(500);
+           } catch (InterruptedException e) {
+               e.printStackTrace();
+           }
+
+       }
+
+       if (launcher.getStatus().toString() == "FINISHED")
+       {
+         /*Intent intent = new Intent(this, StartPage.class);
+           //intent.putExtra("EXTRA_MESSAGE", "Game Over");
+           intent.putExtra("EXTRA_MESSAGE", launcher.getStatus().toString());
+           startActivity(intent);*/
+
+       }
+       finish();
+
 
     }
 
     public void nextLevel(){
-        endgame = false;
+        GlobalElements.boolEndGame = false;
         //Reading level data
         SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
         String gameLevel = settings.getString("gameLevel", "");
@@ -122,7 +144,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
     }
     public void startGame() {
-        endgame = false;
+        GlobalElements.boolEndGame = false;
         //GlobalElements.levelNumber++;
         SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
         String gameLevel = settings.getString("gameLevel", "");
@@ -203,7 +225,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         contentView.addView(balloon);
 
 //     Balloon animation begins
-        int duration = Math.max(GlobalElements.MIN_DURATION, GlobalElements.MAX_DURATION - (GlobalElements.levelNumber * 1000));
+        int duration = Math.max(GlobalElements.MIN_DURATION, GlobalElements.MAX_DURATION - (LevelLogic.getBalloonSpeed() * 1000));
         balloon.releaseBalloon(screenHeight, duration);
 
     }
@@ -215,13 +237,28 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         }
         contentView.removeView(balloon);
         balloonsPoppedThisLevel++;
-        if (balloonsPoppedThisLevel == GlobalElements.MAX_BALLOONS && endgame!= true)
+        if (balloonsPoppedThisLevel == GlobalElements.MAX_BALLOONS && GlobalElements.boolEndGame!= true)
         {
+            LayoutInflater inflater = getLayoutInflater();
+            // Inflate the Layout
+            View layout = inflater.inflate(R.layout.custom_layout,
+                    (ViewGroup) findViewById(R.id.custom_toast_layout));
+
+            TextView text =  layout.findViewById(R.id.textToShow);
+            // Set the Text to show in TextView
+            text.setText("Leveling Up");
+
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
             nextLevel();
         }
 
     }
     public void placeRectangle(){
+
         //populating the rectangles
         Rectangle[] rectangle = new Rectangle[5];
         int yOfRectangles = (int)(0.85 * contentView.getHeight());

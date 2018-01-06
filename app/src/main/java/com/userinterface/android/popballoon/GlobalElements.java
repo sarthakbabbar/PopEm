@@ -19,6 +19,7 @@ public class GlobalElements {
 
 
     public static int levelNumber= 1;
+    public static boolean boolEndGame = false;
 
     public static final int MIN_DELAY = 500;
 
