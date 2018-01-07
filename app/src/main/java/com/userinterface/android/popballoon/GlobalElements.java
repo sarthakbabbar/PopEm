@@ -2,9 +2,7 @@ package com.userinterface.android.popballoon;
 
 import android.graphics.Color;
 
-/**
- * Created by sarthakbabbar on 31/12/17.
- */
+
 
 public class GlobalElements {
 

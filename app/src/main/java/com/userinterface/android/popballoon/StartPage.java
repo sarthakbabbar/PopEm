@@ -46,22 +46,6 @@ public class StartPage extends AppCompatActivity {
             Log.e("",e.getMessage());
         }
 
-    /*    LayoutInflater inflater = getLayoutInflater();
-        // Inflate the Layout
-        View layout = inflater.inflate(R.layout.custom_layout,
-                (ViewGroup) findViewById(R.id.custom_toast_layout));
-
-        TextView text =  layout.findViewById(R.id.textToShow);
-        // Set the Text to show in TextView
-        if (GlobalElements.boolEndGame == true) {
-            text.setText("Game Over");
-            Toast toast = new Toast(getApplicationContext());
-            toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setView(layout);
-            toast.show();
-        } */
-
         Log.d("On Create","the page is loaded ");
 
 

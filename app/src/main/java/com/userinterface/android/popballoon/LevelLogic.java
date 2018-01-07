@@ -1,10 +1,5 @@
 package com.userinterface.android.popballoon;
 
-
-/**
- * Created by sarthakbabbar on 04/01/18.
- */
-
 public class LevelLogic {
 
     public static int[] getRectangleColor()

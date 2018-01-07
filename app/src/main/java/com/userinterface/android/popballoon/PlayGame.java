@@ -41,23 +41,33 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         Intent intent = getIntent();
         String message = intent.getStringExtra("EXTRA_MESSAGE");
         LayoutInflater inflater = getLayoutInflater();
-        // Inflate the Layout
-        View layout = inflater.inflate(R.layout.custom_layout,
-                (ViewGroup) findViewById(R.id.custom_toast_layout));
+        // Customizing the toast and showing it
+        try {
+            //Inflate the layout
+            View layout = inflater.inflate(R.layout.custom_layout,
+                    (ViewGroup) findViewById(R.id.custom_toast_layout));
 
-        TextView text =  layout.findViewById(R.id.textToShow);
-        // Set the Text to show in TextView
-        text.setText(message);
+            TextView text =  layout.findViewById(R.id.textToShow);
+            // Set the Text to show in TextView
 
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
+            if (GlobalElements.levelNumber == 1){
+                text.setText("Pop the balloons of the color shown below");
+            }else {text.setText(message);}
+
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
+        }
+        catch (Exception e){
+            Log.d("onCreate", "could not show the toast");
+            Log.e("",e.getMessage());
+        }
 
         //adding banner ad to the activity
         try {
-            MobileAds.initialize(this, "ca-app-pub-2511496555353949~6166449183");
+            MobileAds.initialize(this, "ca-app-pub-9895741583663083~4462085894");
             adPlayGame = findViewById(R.id.adViewBanner);
             AdRequest adRequest = new AdRequest.Builder().build();
             adPlayGame.loadAd(adRequest);
@@ -90,6 +100,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
                 }
             });
         }
+        Log.d("onCreate", "On create for the play game completed");
     }
 
 
@@ -97,14 +108,20 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     {
 
         GlobalElements.boolEndGame = true;
-       while(!launcher.isCancelled()) {
-            launcher.cancel(true);
-        }
+       try {
+           while (!launcher.isCancelled()) {
+               launcher.cancel(true);
+           }
 
-       while (launcher.getStatus().toString() == "RUNNING") {
-            launcher.cancel(true);
+           while (launcher.getStatus().toString() == "RUNNING") {
+               launcher.cancel(true);
 
 
+           }
+       }
+       catch (Exception e ){
+           Log.d("onEndgame", "could not end the game ");
+           Log.e("",e.getMessage());
        }
 
        if (launcher.getStatus().toString() == "FINISHED")
@@ -115,7 +132,9 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
            startActivity(intent);*/
 
        }
+
        finish();
+       Log.d("startGame", "Ending the game");
 
 
     }
@@ -135,9 +154,15 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         editor.putString("gameLevel", levelString);
         editor.commit();
 
-        //starting Game here
-        startGame();
+        try {
+            //starting Game here
+            startGame();}
+        catch (Exception e){
+            Log.d("nextLevel", "could not start the game");
+            Log.e("",e.getMessage());
+        }
 
+        Log.d("nextLevel", "next level is completed");
     }
     public void startGame() {
         GlobalElements.boolEndGame = false;
@@ -148,20 +173,16 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         levelDisplay.setText("Level " + gameLevel);
         launcher = new BalloonLauncher();
         balloonsPoppedThisLevel = 0;
-        placeRectangle();
 
-        /*try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-
-        launcher.execute(GlobalElements.levelNumber);
-
-
+        try {
+            placeRectangle();
+            launcher.execute(GlobalElements.levelNumber);
+        }
+        catch (Exception e) {
+            Log.d("startGame", "launching ballons and placing rectangles");
+            Log.e("",e.getMessage());
+        }
     }
-
-
 
     public class BalloonLauncher extends AsyncTask<Integer, Integer, Void> {
 
@@ -189,6 +210,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Log.d("doInBackGround","Delay is not working");
                 }
             }
 
@@ -212,7 +234,6 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         //adding colors to the balloon
         //Random r = new Random();
         int randColor = (int) (Math.random()*5);
-
         Balloon balloon = new Balloon(this, tintColors[randColor], 150);
 
 //      Set balloon vertical position and dimensions, add to container
@@ -224,6 +245,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         int duration = Math.max(GlobalElements.MIN_DURATION, GlobalElements.MAX_DURATION - (LevelLogic.getBalloonSpeed() * 1000));
         balloon.releaseBalloon(screenHeight, duration);
 
+        Log.d("launch balloon", "launching the balloon");
     }
 
     @Override
