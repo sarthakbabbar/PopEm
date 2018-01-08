@@ -51,7 +51,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
             // Set the Text to show in TextView
 
             if (GlobalElements.levelNumber == 1){
-                text.setText("Pop the balloons of the color shown below");
+                text.setText("HINT: Rectangle colors tell the balloons to be popped");
             }else {text.setText(message);}
 
             Toast toast = new Toast(getApplicationContext());
@@ -169,7 +169,19 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         //GlobalElements.levelNumber++;
         SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
         String gameLevel = settings.getString("gameLevel", "");
-        GlobalElements.levelNumber = Integer.parseInt(gameLevel);
+        if (gameLevel != "") { //This is to set a value the first time that the app is launched.
+            GlobalElements.levelNumber = Integer.parseInt(gameLevel);
+        }
+        else
+        {
+            GlobalElements.levelNumber = 1;
+            String levelString = Integer.toString(GlobalElements.levelNumber);
+            // Writing data to SharedPreferences
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("gameLevel", levelString);
+            editor.commit();
+            gameLevel = "1";
+        }
         levelDisplay.setText("Level " + gameLevel);
         launcher = new BalloonLauncher();
         balloonsPoppedThisLevel = 0;
