@@ -106,18 +106,15 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
     public void endGame()
     {
-
         GlobalElements.boolEndGame = true;
        try {
            while (!launcher.isCancelled()) {
                launcher.cancel(true);
            }
-
-           while (launcher.getStatus().toString() == "RUNNING") {
+           // This code was causing delay function to crash on some devices. - {GB}
+          /* while (launcher.getStatus().toString() == "RUNNING") {
                launcher.cancel(true);
-
-
-           }
+           }*/
        }
        catch (Exception e ){
            Log.d("onEndgame", "could not end the game ");
@@ -126,10 +123,10 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
        if (launcher.getStatus().toString() == "FINISHED")
        {
-         /*Intent intent = new Intent(this, StartPage.class);
+         Intent intent = new Intent(this, StartPage.class);
            //intent.putExtra("EXTRA_MESSAGE", "Game Over");
            intent.putExtra("EXTRA_MESSAGE", launcher.getStatus().toString());
-           startActivity(intent);*/
+           startActivity(intent);
 
        }
 
