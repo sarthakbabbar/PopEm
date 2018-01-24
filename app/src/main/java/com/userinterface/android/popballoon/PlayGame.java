@@ -29,9 +29,11 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     private int balloonsPoppedThisLevel;
     TextView levelDisplay;
     BalloonLauncher launcher;
+    private int lifeLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
@@ -43,8 +45,12 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
         Intent intent = getIntent();
 
+
+        lifeLeft = GlobalElements.MAX_LIFE;
+
         // Creating colors for the hint message
-        String message = intent.getStringExtra("EXTRA_MESSAGE") + ": Pop the " +LevelLogic.lvlColorMessage()+ " balloons";
+        //String message = intent.getStringExtra("EXTRA_MESSAGE") + ": Pop the " +LevelLogic.lvlColorMessage()+ " balloons"; // This code was initially used when there were 2 buttons
+        String message = "Let's Go: Pop the " +LevelLogic.lvlColorMessage()+ " balloons";
         LayoutInflater inflater = getLayoutInflater();
         // Customizing the toast and showing it
         try {
@@ -269,7 +275,13 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     @Override
     public void popBalloon(Balloon balloon, boolean userTouch, int currentColor) {
         if ((userTouch && !LevelLogic.checkPopColor(currentColor) || (!userTouch && LevelLogic.checkPopColor(currentColor)))){
-            endGame();
+            lifeLeft --;
+            if (lifeLeft ==0)
+            {
+                endGame();
+            }
+
+
         }
         contentView.removeView(balloon);
         balloonsPoppedThisLevel++;

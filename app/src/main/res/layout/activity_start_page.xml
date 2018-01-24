@@ -25,11 +25,12 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="180dp"
             android:layout_alignParentLeft="true"
+            android:layout_marginBottom="180dp"
             android:layout_marginLeft="50dp"
             android:background="@null"
-            android:onClick="onPlay"
+            android:onClick="onReset"
+            android:visibility="visible"
             app:srcCompat="@drawable/btn_play" />
 
         <ImageButton
@@ -37,11 +38,12 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="180dp"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="180dp"
             android:layout_marginRight="50dp"
             android:background="@null"
-            android:onClick="onReset"
+            android:onClick="onPlay"
+            android:visibility="invisible"
             app:srcCompat="@drawable/btn_reset" />
 
         <com.google.android.gms.ads.AdView
