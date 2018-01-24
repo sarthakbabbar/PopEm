@@ -16,6 +16,9 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 
 public class PlayGame extends AppCompatActivity implements Balloon.BalloonListener {
 
@@ -39,7 +42,9 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         levelDisplay = findViewById(R.id.textLevelNumber);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra("EXTRA_MESSAGE");
+
+        // Creating colors for the hint message
+        String message = intent.getStringExtra("EXTRA_MESSAGE") + ": Pop the " +LevelLogic.lvlColorMessage()+ " balloons";
         LayoutInflater inflater = getLayoutInflater();
         // Customizing the toast and showing it
         try {
@@ -50,15 +55,18 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
             TextView text =  layout.findViewById(R.id.textToShow);
             // Set the Text to show in TextView
 
-            if (GlobalElements.levelNumber == 1){
+            /*if (GlobalElements.levelNumber == 1){
                 text.setText("HINT: Rectangle colors tell the balloons to be popped");
-            }else {text.setText(message);}
+            }else {text.setText(message);} */
 
+
+            text.setText(message);
             Toast toast = new Toast(getApplicationContext());
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);
             toast.setDuration(Toast.LENGTH_LONG);
             toast.setView(layout);
             toast.show();
+
         }
         catch (Exception e){
             Log.d("onCreate", "could not show the toast");
@@ -161,6 +169,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
         Log.d("nextLevel", "next level is completed");
     }
+
     public void startGame() {
         GlobalElements.boolEndGame = false;
         //GlobalElements.levelNumber++;
@@ -273,7 +282,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
             TextView text =  layout.findViewById(R.id.textToShow);
             // Set the Text to show in TextView
-            text.setText("Leveling Up");
+            text.setText("Leveling Up;" +" Pop the " +LevelLogic.lvlColorMessage()+ " balloons");
 
             Toast toast = new Toast(getApplicationContext());
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, -400);

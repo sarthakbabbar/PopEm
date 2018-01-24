@@ -1,5 +1,8 @@
 package com.userinterface.android.popballoon;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 public class LevelLogic {
 
     public static int[] getRectangleColor()
@@ -33,6 +36,72 @@ public class LevelLogic {
 
         }
      return assRectColor;
+    }
+
+    public static String lvlColorMessage()
+    {
+        // Creating colors for the hint message
+        String lvlMsgBalloonColor = "";
+        int[] lvlLogicBalloonColor = LevelLogic.getRectangleColor();
+        Set<Integer> setUniqueNumbers = new LinkedHashSet<Integer>();
+        for(int x : lvlLogicBalloonColor) {
+            setUniqueNumbers.add(x);
+        }
+
+        for(Integer x : setUniqueNumbers) {
+            if (x==GlobalElements.RED)
+            {
+                if (lvlMsgBalloonColor == "") {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + "Red";
+                }
+                else
+                {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + " & Red";
+                }
+            }
+            if (x==GlobalElements.GREEN)
+            {
+                if (lvlMsgBalloonColor == "") {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + "Green";
+                }
+                else
+                {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + " & Green";
+                }
+            }
+            if (x==GlobalElements.BLUE)
+            {
+                if (lvlMsgBalloonColor == "") {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + "Blue";
+                }
+                else
+                {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + " & Blue";
+                }
+            }
+            if (x==GlobalElements.OLIVE)
+            {
+                if (lvlMsgBalloonColor == "") {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + "Olive";
+                }
+                else
+                {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + " & Olive";
+                }
+            }
+            if (x==GlobalElements.BROWN)
+            {
+                if (lvlMsgBalloonColor == "") {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + "Brown";
+                }
+                else
+                {
+                    lvlMsgBalloonColor = lvlMsgBalloonColor + " & Brown";
+                }
+            }
+
+        }
+        return lvlMsgBalloonColor;
     }
 
     public static boolean checkPopColor(int balloonColor){
