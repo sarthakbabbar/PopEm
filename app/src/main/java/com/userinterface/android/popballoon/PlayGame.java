@@ -275,7 +275,19 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     @Override
     public void popBalloon(Balloon balloon, boolean userTouch, int currentColor) {
         if ((userTouch && !LevelLogic.checkPopColor(currentColor) || (!userTouch && LevelLogic.checkPopColor(currentColor)))){
+
+
+            String imageID = "imageBtnLife" + lifeLeft;
+            int resID = getResources().getIdentifier(imageID, "id", getPackageName());
+            View lives = findViewById(resID);
+            lives.setVisibility(View.GONE);
+
             lifeLeft --;
+
+
+
+
+
             if (lifeLeft ==0)
             {
                 endGame();

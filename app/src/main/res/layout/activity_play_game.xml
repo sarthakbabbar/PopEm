@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="10"
+            android:text="Level1"
             android:textSize="50dp" />
 
         <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -30,6 +30,33 @@
             ads:adUnitId="ca-app-pub-9895741583663083/3154951072"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="496dp"></com.google.android.gms.ads.AdView>
+
+        <ImageButton
+            android:id="@+id/imageBtnLife1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@null"
+            app:srcCompat="@drawable/heartsmall" />
+
+        <ImageButton
+            android:id="@+id/imageBtnLife2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageBtnLife1"
+            android:background="@null"
+            app:srcCompat="@drawable/heartsmall" />
+
+        <ImageButton
+            android:id="@+id/imageBtnLife3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageBtnLife2"
+            android:background="@null"
+            app:srcCompat="@drawable/heartsmall" />
 
 
     </RelativeLayout>
