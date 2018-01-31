@@ -120,6 +120,18 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
     public void endGame()
     {
+        // Update High Score
+
+        if (GlobalElements.levelNumber > GlobalElements.highScore)
+        {
+            GlobalElements.highScore = GlobalElements.levelNumber - 1;
+            SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("highScore", String.valueOf(GlobalElements.highScore));
+            editor.commit();
+        }
+
+
         GlobalElements.boolEndGame = true;
        try {
            while (!launcher.isCancelled()) {

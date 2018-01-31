@@ -19,11 +19,29 @@ public class StartPage extends AppCompatActivity {
 
     private TextView appName;
     private AdView adStartPage;
+    private TextView highScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
+
+
+        highScore = findViewById(R.id.txtHighScore);
+
+        SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
+        String strHighScore = settings.getString("highScore", "");
+        if (strHighScore == "")
+        {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("highScore", "0");
+            editor.commit();
+            GlobalElements.highScore = 0;
+        }
+        else {
+            GlobalElements.highScore = Integer.parseInt(strHighScore);
+        }
+
         //adding banner add
         try {
             MobileAds.initialize(this, "ca-app-pub-2511496555353949~6166449183");
@@ -38,8 +56,10 @@ public class StartPage extends AppCompatActivity {
         // linking the variable with text View to change the app name
         appName = findViewById(R.id.appNameText);
 
+
         try {
             appName.setText(GlobalElements.APP_NAME);
+            highScore.setText("High Score : " + String.valueOf(GlobalElements.highScore));
         }
         catch (Exception e){
             Log.d("onCreate", "could not create the page");
@@ -90,8 +110,16 @@ public class StartPage extends AppCompatActivity {
         if (adStartPage != null) {
             adStartPage.resume();
         }
+
+
+
         Log.d("onResume","The app was resumed");
         if (GlobalElements.boolEndGame == true) {
+
+            // Updating the score after endgame
+            highScore = findViewById(R.id.txtHighScore);
+            highScore.setText("High Score : " + String.valueOf(GlobalElements.highScore));
+
             LayoutInflater inflater = getLayoutInflater();
             // Inflate the Layout
             View layout = inflater.inflate(R.layout.custom_layout,
@@ -104,6 +132,9 @@ public class StartPage extends AppCompatActivity {
             toast.setDuration(Toast.LENGTH_SHORT);
             toast.setView(layout);
             toast.show();
+
         }
+
+
     }
 }
