@@ -52,6 +52,8 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         //String message = intent.getStringExtra("EXTRA_MESSAGE") + ": Pop the " +LevelLogic.lvlColorMessage()+ " balloons"; // This code was initially used when there were 2 buttons
         String message = "Let's Go: Pop the " +LevelLogic.lvlColorMessage()+ " balloons";
         LayoutInflater inflater = getLayoutInflater();
+
+        
         // Customizing the toast and showing it
         try {
             //Inflate the layout
