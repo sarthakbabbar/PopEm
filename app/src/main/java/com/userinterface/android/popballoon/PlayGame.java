@@ -120,8 +120,7 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     }
 
 
-    public void endGame()
-    {
+    public void endGame() {
         // Update High Score
 
         if (GlobalElements.levelNumber > GlobalElements.highScore)
@@ -141,10 +140,11 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
         }
 
 
+
         Intent intent = new Intent(this, StartPage.class);
         intent.putExtra("EXTRA_MESSAGE", launcher.getStatus().toString());
         startActivity(intent);
-
+        finish();
 
 
     }
@@ -280,19 +280,19 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
     public void popBalloon(Balloon balloon, boolean userTouch, int currentColor) {
         if ((userTouch && !LevelLogic.checkPopColor(currentColor) || (!userTouch && LevelLogic.checkPopColor(currentColor)))){
 
-
-            String imageID = "imageBtnLife" + lifeLeft;
-            int resID = getResources().getIdentifier(imageID, "id", getPackageName());
-            View lives = findViewById(resID);
-            lives.setVisibility(View.GONE);
-
-            lifeLeft --;
+            if (lifeLeft > 0) { // This stupid code avoids setting hearts when lives are dead
+                String imageID = "imageBtnLife" + lifeLeft;
+                int resID = getResources().getIdentifier(imageID, "id", getPackageName());
+                View lives = findViewById(resID);
+                lives.setVisibility(View.GONE);
 
 
 
+            }
 
+            lifeLeft--;
 
-            if (lifeLeft ==0)
+            if (lifeLeft ==0 && GlobalElements.boolEndGame!= true) // This check ensures that endGame is only call;ed the one time
             {
                 endGame();
             }

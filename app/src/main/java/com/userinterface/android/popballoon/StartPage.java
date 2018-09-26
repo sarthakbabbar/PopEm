@@ -35,11 +35,11 @@ public class StartPage extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
         String strHighScore = settings.getString("highScore", "");
-        if (strHighScore == "")
+        if (strHighScore.equals(""))
         {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("highScore", "0");
-            editor.commit();
+            editor.apply();
             GlobalElements.highScore = 0;
         }
         else {
