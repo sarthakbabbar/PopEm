@@ -130,36 +130,21 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
             SharedPreferences settings = getSharedPreferences("MyStorage", MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("highScore", String.valueOf(GlobalElements.highScore));
-            editor.commit();
+            editor.apply();
         }
 
 
         GlobalElements.boolEndGame = true;
-       try {
-           while (!launcher.isCancelled()) {
-               launcher.cancel(true);
-           }
-           // This code was causing delay function to crash on some devices. - {GB}
-          /* while (launcher.getStatus().toString() == "RUNNING") {
-               launcher.cancel(true);
-           }*/
-       }
-       catch (Exception e ){
-           Log.d("onEndgame", "could not end the game ");
-           Log.e("",e.getMessage());
-       }
 
-       if (launcher.getStatus().toString() == "FINISHED")
-       {
-         Intent intent = new Intent(this, StartPage.class);
-           //intent.putExtra("EXTRA_MESSAGE", "Game Over");
-           intent.putExtra("EXTRA_MESSAGE", launcher.getStatus().toString());
-           startActivity(intent);
+        while (!launcher.isCancelled()) {
+            launcher.cancel(true);
+        }
 
-       }
 
-       finish();
-       Log.d("startGame", "Ending the game");
+        Intent intent = new Intent(this, StartPage.class);
+        intent.putExtra("EXTRA_MESSAGE", launcher.getStatus().toString());
+        startActivity(intent);
+
 
 
     }
@@ -236,6 +221,11 @@ public class PlayGame extends AppCompatActivity implements Balloon.BalloonListen
 
             int balloonsLaunched = 0;
             while (balloonsLaunched < GlobalElements.MAX_BALLOONS) {
+
+
+                if(isCancelled())
+                    break;
+
 
 //              Get a random horizontal position for the next balloon
                 int xPosition = (int) (Math.random()*(0.8*screenWidth)); // 0.8 is to avoid the balloon getting cut on the right side.

@@ -9,6 +9,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
@@ -80,6 +84,16 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void onReset(View view){
+
+        //Button Tap Animation
+
+        ImageButton button = (ImageButton)findViewById(R.id.imageBtnPlay);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+        button.startAnimation(myAnim);
+
+
         // Variable settings is created to get SharedPreferences.
         // Name of the preference is MyStorage can be accessed from anywhere else.
         //writing to SharedPreferences
