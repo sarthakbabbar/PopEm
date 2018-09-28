@@ -74,6 +74,8 @@ public class StartPage extends AppCompatActivity {
 
 
     }
+
+
     public void onPlay(View view){
         Intent intent = new Intent(this, PlayGame.class);
         String message = "Game Resumed";
@@ -119,11 +121,26 @@ public class StartPage extends AppCompatActivity {
 
 
     }
-    public void onResume() {
+
+
+    public void onSignUp(View view) {
+        Intent intent = new Intent(this, SignUp.class);
+        String message = "Game Resumed";
+        intent.putExtra("EXTRA_MESSAGE", message);
+        startActivity(intent);
+        //will send intent to start the game from the last activity left
+    }
+
+
+
+        public void onResume(){
         super.onResume();
         if (adStartPage != null) {
             adStartPage.resume();
         }
+
+
+
 
 
 
