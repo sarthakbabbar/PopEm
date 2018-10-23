@@ -2,19 +2,21 @@ package com.userinterface.android.popballoon;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -24,6 +26,8 @@ public class StartPage extends AppCompatActivity {
     private TextView appName;
     private AdView adStartPage;
     private TextView highScore;
+    private ImageButton imgBtnPopUpMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,40 @@ public class StartPage extends AppCompatActivity {
         }
 
         Log.d("On Create","the page is loaded ");
+
+
+
+        //Loading the popup menu
+        imgBtnPopUpMenu = (ImageButton) findViewById(R.id.imgBtnMenu);
+
+        imgBtnPopUpMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PopupMenu popupMenu = new PopupMenu(StartPage.this, imgBtnPopUpMenu);
+
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                Toast.makeText(StartPage.this, " Clicked", Toast.LENGTH_SHORT ).show();
+
+
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        Toast.makeText(StartPage.this, " "+ menuItem.getTitle(), Toast.LENGTH_SHORT ).show();
+                        return true;
+                    }
+                });
+
+
+                popupMenu.show();
+
+            }
+        });
+
+
+
+
 
 
     }

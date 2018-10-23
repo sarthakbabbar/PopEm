@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteY="65dp">
 
         <TextView
             android:id="@+id/appNameText"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageBtnPlay"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="47dp"
+            android:layout_marginTop="28dp"
             android:text="High Score : 0"
             android:textSize="25dp" />
 
@@ -44,15 +44,15 @@
             android:layout_marginTop="20dp"
             android:background="@null"
             android:onClick="onReset"
-            android:visibility="visible"
-            app:srcCompat="@drawable/btn_play" />
+            android:src="@android:drawable/ic_media_play"
+            android:visibility="visible" />
 
         <ImageButton
             android:id="@+id/imageBtnReset"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/imageBtnPlay"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="48dp"
             android:background="@null"
             android:onClick="onPlay"
@@ -68,18 +68,24 @@
             ads:adSize="SMART_BANNER"
             ads:adUnitId="ca-app-pub-9895741583663083/3154951072"></com.google.android.gms.ads.AdView>
 
-        <Button
-            android:id="@+id/btnSignUp"
+        <ImageButton
+            android:id="@+id/imgButtonSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtHighScore"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="146dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginBottom="59dp"
+            android:layout_above="@+id/adViewBanner"
+            android:layout_centerHorizontal="true"
             android:onClick="onSignUp"
-            android:text="SignUp" />
+            app:srcCompat="@android:drawable/arrow_down_float" />
+
+        <ImageButton
+            android:id="@+id/imgBtnMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="27dp"
+            app:srcCompat="@android:drawable/arrow_down_float" />
 
     </RelativeLayout>
 
