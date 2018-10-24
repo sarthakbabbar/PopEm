@@ -6,46 +6,70 @@
     android:layout_height="match_parent"
     tools:context="com.userinterface.android.popballoon.StartPage">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="65dp">
 
-        <TextView
-            android:id="@+id/appNameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="115dp"
-            android:fontFamily="@font/coiny"
-            android:text="AppName"
-            android:textSize="50dp" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:weightSum="100">
 
-        <TextView
-            android:id="@+id/txtHighScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageBtnPlay"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"
-            android:text="High Score : 0"
-            android:textSize="25dp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10">
 
-        <ImageButton
-            android:id="@+id/imageBtnPlay"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/appNameText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@null"
-            android:onClick="onReset"
-            android:src="@android:drawable/ic_media_play"
-            android:visibility="visible" />
+                <ImageButton
+                    android:id="@+id/imgBtnMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="27dp"
+                    app:srcCompat="@android:drawable/arrow_down_float" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="35">
+
+                <TextView
+                    android:id="@+id/appNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/coiny"
+                    android:text="AppName"
+                    android:textSize="50dp" />
+
+
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="35">
+
+                <ImageButton
+                    android:id="@+id/imageBtnPlay"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/appNameText"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:onClick="onReset"
+                    android:src="@android:drawable/ic_media_play"
+                    android:visibility="visible" />
 
         <ImageButton
             android:id="@+id/imageBtnReset"
@@ -59,35 +83,63 @@
             android:visibility="invisible"
             app:srcCompat="@drawable/btn_reset" />
 
-        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adViewBanner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            ads:adSize="SMART_BANNER"
-            ads:adUnitId="ca-app-pub-9895741583663083/3154951072"></com.google.android.gms.ads.AdView>
 
-        <ImageButton
-            android:id="@+id/imgButtonSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/adViewBanner"
-            android:layout_centerHorizontal="true"
-            android:onClick="onSignUp"
-            app:srcCompat="@android:drawable/arrow_down_float" />
 
-        <ImageButton
-            android:id="@+id/imgBtnMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="27dp"
-            app:srcCompat="@android:drawable/arrow_down_float" />
+            </TableRow>
 
-    </RelativeLayout>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10">
+
+                <TextView
+                    android:id="@+id/txtHighScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="High Score : 0"
+                    android:textSize="25dp" />
+
+                <ImageButton
+                    android:id="@+id/imgButtonSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onSignUp"
+                    app:srcCompat="@android:drawable/arrow_down_float" />
+
+
+
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10">
+
+                <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adViewBanner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    ads:adSize="SMART_BANNER"
+                    ads:adUnitId="ca-app-pub-9895741583663083/3154951072"></com.google.android.gms.ads.AdView>
+
+
+            </TableRow>
+
+
+
+
+
+        </TableLayout>
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>
