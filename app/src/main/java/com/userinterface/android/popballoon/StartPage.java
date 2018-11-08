@@ -88,14 +88,24 @@ public class StartPage extends AppCompatActivity {
                 PopupMenu popupMenu = new PopupMenu(StartPage.this, imgBtnPopUpMenu);
 
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-                Toast.makeText(StartPage.this, " Clicked", Toast.LENGTH_SHORT ).show();
-
 
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        Toast.makeText(StartPage.this, " "+ menuItem.getTitle(), Toast.LENGTH_SHORT ).show();
+                        switch(menuItem.getTitle().toString())
+                        {
+                            case "Instructions":
+                                break;
+                            case "SignUp":
+                                onSignUp();
+                                break;
+                            default:
+                                Toast.makeText(StartPage.this, menuItem.getTitle().toString(), Toast.LENGTH_SHORT ).show();
+                                break;
+
+                        }
+
                         return true;
                     }
                 });
@@ -160,6 +170,13 @@ public class StartPage extends AppCompatActivity {
 
     }
 
+    public void onSignUp(){
+        Intent intent = new Intent(this, SignUp.class);
+        String message = "Game Resumed";
+        intent.putExtra("EXTRA_MESSAGE", message);
+        startActivity(intent);
+        //will send intent to start the game from the last activity left
+    }
 
     public void onSignUp(View view) {
         Intent intent = new Intent(this, SignUp.class);
